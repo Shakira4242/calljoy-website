@@ -35,7 +35,7 @@ export default function Login(){
 	          </div>
 	        </div>
 
-	        <form action="/login" className="mt-8 grid grid-cols-6 gap-6">
+	        <form action="/api/login" className="mt-8 grid grid-cols-6 gap-6">
 	          <div className="col-span-6 sm:col-span-3">
 	            <label
 	              for="phone"
