@@ -1,4 +1,3 @@
-
 export default function Heading() {
   return (
 	<main>
@@ -7,7 +6,7 @@ export default function Heading() {
 		    <div>
 		      <div>
 		        <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-5xl mt-8">
-		       		We work hard so you can relax
+		        	
 		        </h1>
 		      	<div className="border-8 border-indigo-500/100 rounded-lg mt-8">
 		        	<video class="w-full" autoPlay loop muted>

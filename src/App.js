@@ -2,8 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import Heading from './Heading.js';
 import NavigationBar from './NavigationBar.js';
-import Pricing from './Pricing.js';
+import CompanyTestimonial from './CompanyTestimonial.js';
 import FAQ from './FAQ.js';
+import Footer from './Footer.js';
+import Login from './Login.js'
 
 import {
   BrowserRouter,
@@ -17,9 +19,17 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="pricing/" element={<PricingPage />} />
+        <Route path="login/" element={<LoginPage/>}/>
       </Routes>
     </BrowserRouter>
+  );
+}
+
+const LoginPage = () => {
+  return (
+    <>
+      <Login/>
+    </>
   );
 }
 
@@ -27,16 +37,8 @@ const HomePage = () => {
   return (
     <>
       <NavigationBar/>
-      <Pricing/>
-    </>
-  );
-}
-
-const PricingPage = () => {
-  return (
-    <>
-      <NavigationBar/>
-      <Pricing/>
+      <CompanyTestimonial/>
+      <Footer/>
     </>
   );
 }

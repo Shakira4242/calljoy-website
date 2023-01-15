@@ -4,74 +4,51 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Pricing', href: 'pricing' },
+  { name: 'Product', href: '#' },
   { name: 'Features', href: '#' },
   { name: 'Marketplace', href: '#' },
   { name: 'Company', href: '#' },
 ]
 
-export default function NavigationBar() {
+export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="isolate bg-white bg-gray-900">
-      <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
-        <svg
-          className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
-          viewBox="0 0 1155 678"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)"
-            fillOpacity=".3"
-            d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-          />
-          <defs>
-            <linearGradient
-              id="45de2b6b-92d5-4d68-a6a0-9b9b2abad533"
-              x1="1155.49"
-              x2="-78.208"
-              y1=".177"
-              y2="474.645"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#9089FC" />
-              <stop offset={1} stopColor="#FF80B5" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+    <div className="bg-white pattern-wavy pattern-indigo-600 pattern-bg-transparent pattern-opacity-100 pattern-size-8">
       <div className="px-6 pt-6 lg:px-8">
         <div>
           <nav className="flex h-9 items-center justify-between" aria-label="Global">
             <div className="flex lg:min-w-0 lg:flex-1" aria-label="Global">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <img className="h-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+                <img className="h-8 absolute" src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/calljoy.png" alt="" />
               </a>
             </div>
-            <div className="flex lg:hidden">
+            <div className="flex lg:hidden transition hover:scale-105">
               <button
                 type="button"
                 className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open main menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                <div className="h-full" aria-hidden="true">
+                  <svg className="w-6 h-6 fill-black scale-150">
+                    <path fill-rule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                  </svg>
+                </div>
               </button>
             </div>
             <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12">
               {navigation.map((item) => (
-                <a key={item.name} href={item.href} className="font-semibold text-gray-900 hover:text-gray-900">
+                <a key={item.name} href={item.href} className="font-semibold text-gray-900 hover:scale-105">
                   {item.name}
                 </a>
               ))}
             </div>
             <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
               <a
-                href="#"
-                className="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20"
+                href="/login"
+                className="inline-block rounded-lg px-7 py-2 text-sm font-semibold leading-6 bg-indigo-600 shadow-sm ring-1 border-black border-2 border-r-4 border-b-4 ring-black text-white hover:scale-110 duration-1000"
               >
                 Log in
               </a>
@@ -129,48 +106,46 @@ export default function NavigationBar() {
         </div>
       </div>
       <main>
-        <div className="relative px-6">
-          <div className="mx-auto max-w-xl pt-20 pb-32 sm:pb-40">
+        <div className="relative px-6 lg:px-0">
+          <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-30 sm:pb-40">
             <div>
+              <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+              </div>
               <div>
-                <h1 className="text-4xl text-white font-bold tracking-tight sm:text-center sm:text-6xl">
-                  Get 10x more leads
+                <h1 className="text-5xl font-extrabold text-center justify-center sm:text-7xl border-black border-1 transition hover:scale-105 duration-1000">
+                  Find <span className="text-indigo-700">missed</span> customers
                 </h1>
-                <p className="mt-6 text-lg leading-8 text-white sm:text-center">
-                  We can help you get 10x the number of texts for your service business
+                <p className="mt-6 text-xl leading-8 text-gray-600 text-center font-semibold transition hover:scale-105 duration-1000">
+                  We help you find and text your customers like never before.
                 </p>
+                <div className="mt-6 flex gap-x-4 sm:justify-center justify-center transition hover:scale-110 duration-1000">
+                  <a
+                    href="/login"
+                    className="inline-block border-black border-2 border-r-4 border-b-4 shadow-solid-primary rounded-xl bg-indigo-600 px-5 py-3 text-2xl font-semibold leading-7 text-white ring-3 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
+                  >
+                    Try for free{' '}
+                    <span className="text-indigo-200" aria-hidden="true">
+                      &rarr;
+                    </span>
+                  </a>
+                </div>
               </div>
-              <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-                <svg
-                  className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
-                  viewBox="0 0 1155 678"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill="url(#ecb5b0c9-546c-4772-8c71-4d3f06d544bc)"
-                    fillOpacity=".3"
-                    d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="ecb5b0c9-546c-4772-8c71-4d3f06d544bc"
-                      x1="1155.49"
-                      x2="-78.208"
-                      y1=".177"
-                      y2="474.645"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#9089FC" />
-                      <stop offset={1} stopColor="#FF80B5" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+
+              <div className="mt-8">
               </div>
+
+              <div>
+                <div className="absolute relative sm:justify-center justify-center px-8 py-10 mt-2">
+                  <div className="transition px-2 hover:scale-105 duration-1000">
+                    <img className="object-contain" src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/iPhone%2013%20Pro%20Max%20-%202(7).png"/>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       </main>
     </div>
-  );
+  )
 }
