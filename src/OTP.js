@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
-import { useNavigate } from "react-router-dom";
-
-export default function Login(){
-	const navigate = useNavigate();
+export default function OTP(){
 
 	const { register, handleSubmit, watch, formState: { errors } } = useForm();
   	const onSubmit = (data) => {
@@ -14,16 +11,13 @@ export default function Login(){
 		
 		console.log(data.phone);
 
-		fetch('/api/signup', {
+		fetch('/api/verify', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({phone: data.phone}),
-		})
-		
-		// navigate("/otp");
-
+			body: JSON.stringify({'phone': data.phone}),
+		});
 	}
 	
 	return (
@@ -55,7 +49,7 @@ export default function Login(){
 		          <h1
 		            className="pt-10 mt-2 text-4xl font-bold text-gray-900 md:text-4xl"
 		          >
-		          	Sign up to get your first 5 leads on us.
+		          	A verification code has been sent to your phone
 		          </h1>
 	          </div>
 	        </div>
@@ -63,18 +57,18 @@ export default function Login(){
 	        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 grid grid-cols-6 gap-6">
 	          <div className="col-span-6 sm:col-span-3">
 	            <label
-	              for="phone"
+	              for="code"
 	              className="block text-sm font-medium text-gray-700 text-gray-200"
 	            >
-	              Phone number
+	              6 digit Verification code
 	            </label>
 
 	            <input
-	              type="tel"
-	              id="phone"
-	              name="phone"
+	              type="number"
+	              id="code"
+	              name="code"
 	              className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm border-gray-700 bg-gray-800 text-gray-200 font-bold"
-				  {...register("phone", { required: true })}
+				  {...register("code", { required: true })}
 	            />
 	          </div>
 

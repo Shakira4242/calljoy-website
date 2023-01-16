@@ -27,9 +27,9 @@ export default function handler(request, response) {
 
   console.log(phone)
 
-  // response.status(200).json({
-  //   body: request.body,
-  //   query: request.query,
-  //   cookies: request.cookies,
-  // });
+  response.status(200).json({
+    body: phone,
+    query: request.query,
+    cookies: request.cookies,
+  });
 }

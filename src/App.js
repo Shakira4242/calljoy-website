@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import Heading from './Heading.js';
+
 import NavigationBar from './NavigationBar.js';
 import CompanyTestimonial from './CompanyTestimonial.js';
-import FAQ from './FAQ.js';
 import Footer from './Footer.js';
-import Login from './Login.js'
+import Login from './Login.js';
+import OTP from './OTP.js';
 
 import {
   BrowserRouter,
@@ -20,8 +19,17 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="login/" element={<LoginPage/>}/>
+        <Route path="otp/" element={<OTPPage/>}/>
       </Routes>
     </BrowserRouter>
+  );
+}
+
+const OTPPage = () => {
+  return (
+    <>
+      <OTP/>
+    </>
   );
 }
 
