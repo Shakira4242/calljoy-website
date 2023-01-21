@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
   'https://bpeqsefkefhjnfshvrck.supabase.co',
-  process.env.SUPABASE_PUBLIC_KEY
+  process.env.supabase_public_key
 );
 
 // let phone = '+12107128563'
