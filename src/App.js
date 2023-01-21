@@ -5,6 +5,8 @@ import CompanyTestimonial from './CompanyTestimonial.js';
 import Footer from './Footer.js';
 import Login from './Login.js';
 import OTP from './OTP.js';
+import Dashboard from './Dashboard.js';
+import Stats from './Stats.js';
 
 import {
   BrowserRouter,
@@ -13,6 +15,10 @@ import {
   Link,
 } from "react-router-dom";
 
+import supabase from './auth';
+import React, { useEffect } from 'react';
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +26,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="login/" element={<LoginPage/>}/>
         <Route path="otp/" element={<OTPPage/>}/>
+        <Route path="dashboard/" element={<DashboardPage/>}/>
       </Routes>
     </BrowserRouter>
   );
@@ -46,8 +53,15 @@ const HomePage = () => {
     <>
       <NavigationBar/>
       <CompanyTestimonial/>
+      <Stats/>
       <Footer/>
     </>
+  );
+}
+
+const DashboardPage = () => {  
+  return (
+    <Dashboard/>
   );
 }
 

@@ -4,30 +4,70 @@ import { useForm } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 
+import supabase from './auth.js';
+
 export default function Login(){
 	const navigate = useNavigate();
+
+	React.useEffect(() => {
+		console.log('helloooooo!')
+		supabase.auth.getUser().then((user) => {
+			console.log(user.data.user)
+			if(user.data.user){
+				navigate("/dashboard")
+			}
+		});
+	}, []);
 
 	const { register, handleSubmit, watch, formState: { errors } } = useForm();
   	const onSubmit = (data) => {
 		// make a get request to the api/login.js
 		// pass the phone number
-		
-		console.log(data.phone);
+		console.log(data.phone)
 
-		fetch('/api/signup', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({phone: data.phone}),
+		// check if number is 10 digits
+		
+		if(data.phone.length == 10){
+			console.log('10 digits')
+		}else{
+			console.log('not 10 digits')
+		}
+
+		function toE164(num) {
+			let newNum = num.replace(/[^\d]/g, '');
+			if (newNum.length === 10) {
+				newNum = '+1' + newNum;
+			} else if (newNum.length > 10) {
+				newNum = '+' + newNum;
+			}
+		
+			return newNum;
+		}
+
+		// format phone number to E.164 format for twilio
+
+		const phone = toE164(data.phone)
+		
+
+
+		supabase.auth.signInWithOtp({'phone': phone})
+		.then(({ data, error }) => {
+			if(error) {
+				console.log(error)
+			}else{
+				console.log(data)
+			}
 		})
-		
-		// navigate("/otp");
 
+		navigate("/otp", {
+			state: {
+				'phone': phone
+			}
+		});
 	}
 	
 	return (
-	<section className="bg-white pattern-wavy pattern-indigo-600 pattern-bg-transparent pattern-opacity-100 pattern-size-8">
+	<section className="bg-gray-900 dark:bg-white">
 	  <div className="lg:grid min-h-screen lg:grid-cols-12 px-6 pt-6 lg:px-8 justify-center">
 	    <div
 	      className="relative flex h-full items-end lg:col-span-5 xl:col-span-6 hidden lg:block"
@@ -55,7 +95,7 @@ export default function Login(){
 		          <h1
 		            className="pt-10 mt-2 text-4xl font-bold text-gray-900 md:text-4xl"
 		          >
-		          	Sign up to get your first 5 leads on us.
+		          	Get 5 leads this month
 		          </h1>
 	          </div>
 	        </div>
@@ -64,7 +104,7 @@ export default function Login(){
 	          <div className="col-span-6 sm:col-span-3">
 	            <label
 	              for="phone"
-	              className="block text-sm font-medium text-gray-700 text-gray-200"
+	              className="block text-sm font-medium text-gray-700 dark:text-gray-700"
 	            >
 	              Phone number
 	            </label>
@@ -89,7 +129,7 @@ export default function Login(){
 				<div className="col-span-6 sm:flex sm:items-center sm:gap-4">
 					<p className="mt-4 text-sm text-gray-900 font-semibold sm:mt-0">
 						Already have an account?{" "}
-						<a href="/login" className="text-gray-700 underline font-semibold text-gray-200">
+						<a href="/login" className="dark:text-gray-700 underline font-semibold text-gray-200">
 							Log in
 						</a>.
 					</p>

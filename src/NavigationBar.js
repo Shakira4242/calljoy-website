@@ -1,7 +1,9 @@
 /* This example requires Tailwind CSS v3.0+ */
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import supabase from './auth.js';
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -11,20 +13,32 @@ const navigation = [
 ]
 
 export default function Example() {
+  const navigate = useNavigate();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  React.useEffect(() => {
+    supabase.auth.getUser().then((user) => {
+      //console.log(user.data.user)
+
+      if(user.data.user){
+        navigate("/dashboard")
+      }
+    });
+  }, []);
+
   return (
-    <div className="bg-white pattern-wavy pattern-indigo-600 pattern-bg-transparent pattern-opacity-100 pattern-size-8">
+    <div className="bg-white">
       <div className="px-6 pt-6 lg:px-8">
         <div>
           <nav className="flex h-9 items-center justify-between" aria-label="Global">
             <div className="flex lg:min-w-0 lg:flex-1" aria-label="Global">
               <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <img className="h-8 absolute" src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/calljoy.png" alt="" />
+                <img className="h-8 px-4" src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/calljoy.png" alt="" />
               </a>
             </div>
-            <div className="flex lg:hidden transition hover:scale-105">
+            <div className="flex lg:hidden  ">
               <button
                 type="button"
                 className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -40,7 +54,7 @@ export default function Example() {
             </div>
             <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-center lg:gap-x-12">
               {navigation.map((item) => (
-                <a key={item.name} href={item.href} className="font-semibold text-gray-900 hover:scale-105">
+                <a key={item.name} href={item.href} className="font-semibold text-gray-900 ">
                   {item.name}
                 </a>
               ))}
@@ -48,9 +62,9 @@ export default function Example() {
             <div className="hidden lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
               <a
                 href="/login"
-                className="inline-block rounded-lg px-7 py-2 text-sm font-semibold leading-6 bg-indigo-600 shadow-sm ring-1 border-black border-2 border-r-4 border-b-4 ring-black text-white hover:scale-110 duration-1000"
+                className="inline-block rounded-lg px-5 py-2 text-lg bg-white text-black border-black border-2"
               >
-                Log in
+                Login
               </a>
             </div>
           </nav>
@@ -80,20 +94,9 @@ export default function Example() {
               </div>
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
                   <div className="py-6">
                     <a
-                      href="#"
+                      href="/login"
                       className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
                     >
                       Log in
@@ -112,19 +115,27 @@ export default function Example() {
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               </div>
               <div>
-                <h1 className="text-5xl font-extrabold text-center justify-center sm:text-7xl border-black border-1 transition hover:scale-105 duration-1000">
-                  Find <span className="text-indigo-700">missed</span> customers
-                </h1>
-                <p className="mt-6 text-xl leading-8 text-gray-600 text-center font-semibold transition hover:scale-105 duration-1000">
-                  We help you find and text your customers like never before.
-                </p>
-                <div className="mt-6 flex gap-x-4 sm:justify-center justify-center transition hover:scale-110 duration-1000">
+                <div className="mt-4 text-5xl font-extrabold text-center justify-center sm:text-7xl border-black">
+                  <h1>
+                    <span className="text-indigo-700">New</span> customers
+                  </h1>
+                  <h1>
+                    found weekly
+                  </h1>
+                </div>
+                <div className="mt-4 text-xl text-black text-center font-semibold">
+                  <p>
+                    We crawl the web with our AI to find you customers.
+                    We deliver them right to your phone so you can reach out to them.
+                  </p>
+                </div>
+                <div className="mt-6 flex gap-x-4 sm:justify-center justify-center   ">
                   <a
                     href="/login"
-                    className="inline-block border-black border-2 border-r-4 border-b-4 shadow-solid-primary rounded-xl bg-indigo-600 px-5 py-3 text-2xl font-semibold leading-7 text-white ring-3 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
+                    className="inline-block rounded-lg border-black border-2 py-3 px-5 text-xl font-semibold"
                   >
                     Try for free{' '}
-                    <span className="text-indigo-200" aria-hidden="true">
+                    <span className="text-black" aria-hidden="true">
                       &rarr;
                     </span>
                   </a>
@@ -136,8 +147,8 @@ export default function Example() {
 
               <div>
                 <div className="absolute relative sm:justify-center justify-center px-8 py-10 mt-2">
-                  <div className="transition px-2 hover:scale-105 duration-1000">
-                    <img className="object-contain" src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/iPhone%2013%20Pro%20Max%20-%202(7).png"/>
+                  <div className=" px-2  ">
+                    <img className="object-contain" src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/iPhone%2013%20Pro%20Max%20-%203(1).png"/>
                   </div>
                 </div>
               </div>
