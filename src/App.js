@@ -60,7 +60,9 @@ const HomePage = () => {
 
 const DashboardPage = () => {  
   return (
-    <Dashboard/>
+    <>
+      <Dashboard/>
+    </>
   );
 }
 

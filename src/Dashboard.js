@@ -10,6 +10,8 @@ import fetch from 'node-fetch';
 
 import { DateTime } from "luxon";
 
+import { Link } from "react-router-dom";
+
 export default function Dashboard(){
 	const navigate = useNavigate();
 
@@ -22,8 +24,17 @@ export default function Dashboard(){
 	const [openAIdata, setOpenAIdata] = React.useState(null);
 	const [searchResults, setSearchResults] = React.useState(null);
 
+
+	const [lastCustomerMessage, setLastCustomerMessage] = React.useState(null);
+
+
 	const [customerData, setCustomerData] = React.useState(null);
 	const [lastCustomer, setLastCustomer] = React.useState(null);
+
+	const [plan, setPlan] = React.useState(null);
+
+	const [customerPhone, setCustomerPhone] = React.useState(null);
+	const [lastTimeCustomerReachedOut, setlastTimeCustomerReachedOut] = React.useState(null);
 
 	React.useEffect(() => {
 		setLoading(true);
@@ -36,11 +47,21 @@ export default function Dashboard(){
 			// remove first character from user.data.user.phone
 			var phone = user.data.user.phone.substring(1);
 
-			supabase.from('Outreach').select('*').eq('business_phone, first_lead_phone_number, potential_text', user.data.user.phone.substring(1)).then((data) => {
+			supabase.from('Outreach').select('*').eq('business_phone, first_lead_phone_number, potential_text, plan', user.data.user.phone.substring(1)).then((data) => {
 				const date = DateTime.fromISO(data.data[0].last_customer_time)
 				const now = date.toRelativeCalendar()
 
-				console.log(date)
+				setPlan(data.data[0].plan);
+
+				console.log(date);
+
+				console.log(data.data[0].plan)
+
+				setCustomerPhone(data.data[0].first_lead_phone_number);
+
+				setlastTimeCustomerReachedOut("commented " + now);
+
+				setLastCustomerMessage(data.data[0].potential_text);
 
 				if(date.toObject().hour > 12){
 					setLastCustomer(data.data[0].first_lead_phone_number + " reached out " + now + " at " + String(date.toObject().hour - 12) + ":" + String(date.toObject().minute).padStart(2, '0') + " PM and said: '" + data.data[0].potential_text + "'")
@@ -82,13 +103,13 @@ export default function Dashboard(){
 	}
 
 	return (
-		<div classNameName="bg-black">
+		<div className="bg-white">
 			{!loading ?
-				<div classNameName="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
+				<div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
 
 					{/* Header */}
 
-					<header aria-label="Site Header" className="bg-black">
+					<header aria-label="Site Header" className="bg-white">
 					  <div
 					    class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
 					  >
@@ -97,7 +118,7 @@ export default function Dashboard(){
 					      <div class="flex items-center gap-4">
 
 					        <button
-					          class="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75"
+					          class="block rounded bg-gray-100 p-2.5 text-black transition hover:text-gray-600/75"
 					          onClick={() => setMenuOpen(!menuOpen)}
 					        >
 					          <span class="sr-only">Toggle menu</span>
@@ -121,68 +142,54 @@ export default function Dashboard(){
 					  </div>
 					</header>
 
-
 					{/* Menu */}
 					{menuOpen ? 
-						<div class="flex flex-col justify-between h-screen bg-black border-r">
+						<div class="flex flex-col justify-between h-screen border-r">
 							<div class="px-4 py-6">
 								
 								<nav aria-label="Main Nav" class="flex flex-col mt-6 space-y-1">
-									<a
-										href="/dashboard"
-										class="flex items-center px-4 py-2 text-white bg-gray-900 rounded-lg hover:bg-gray-800"
+									<button
+										type="submit"
+										className="flex items-center px-4 py-3 text-white bg-gray-900 rounded-lg hover:bg-gray-800"
+										onClick={()=> {
+											console.log('hello')
+											navigate("/dashboard");
+											setMenuOpen(!menuOpen);
+										}}
 									>
-										<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="w-5 h-5 opacity-75"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										stroke-width="2"
-										>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-										/>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-										/>
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 opacity-75">
+										  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
 										</svg>
 
-										<span class="ml-3 text-sm font-medium">Users</span>
-									</a>
+										<span class="ml-3 text-sm font-medium">Customers</span>
+									</button>
 
-									<nav>
-										<button
-											type="submit"
-											className="flex items-center w-full px-4 py-2 text-white bg-gray-900 rounded-lg hover:bg-gray-800"
-											onClick={() => {
-												// logout()
-												supabase.auth.signOut()
-												navigate('/')
-											}}
-											>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												class="w-5 h-5 opacity-75"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke="currentColor"
-												stroke-width="2"
-											>
-												<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-												/>
-											</svg>
 
-											<span class="ml-3 text-sm font-medium"> Logout </span>
-										</button>
-									</nav>
+									<button
+										type="submit"
+										className="flex items-center px-4 py-3 text-white bg-gray-900 rounded-lg hover:bg-gray-800"
+										onClick={() => {
+											supabase.auth.signOut()
+											navigate('/')
+										}}
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="w-5 h-5 opacity-75"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2"
+										>
+											<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+											/>
+										</svg>
+
+										<span class="ml-3 text-sm font-medium"> Logout </span>
+									</button>
 								</nav>
 							</div>
 						</div>
@@ -190,46 +197,55 @@ export default function Dashboard(){
 						<></>
 					}
 
+					{/* Plan */}
+
 					<article
-					  class="flex flex-col gap-4 rounded-lg bg-black p-6"
+					  className="flex flex-col rounded-lg bg-white p-6"
 					>
 					  <div>
-					    <strong class="block text-lg font-bold text-white">You are currently on a free trial</strong>
-					    <p>
-					      <span class="text-2xl font-medium text-white"></span>
-					    </p>
+					    <strong className="block text-lg font-bold text-black">Recent customers</strong>
 					  </div>
 					</article>
 
-					<article
-					  class="flex flex-col gap-4 rounded-lg bg-black p-6"
-					>
-					  <div>
-					    <strong class="block text-lg font-bold text-white">{lastCustomer}</strong>
-					    <p>
-					      <span class="text-2xl font-medium text-white"></span>
-					    </p>
-					  </div>
-					</article>
 
-					<article
-					  class="flex flex-col gap-4 rounded-lg bg-black p-6"
-					>
-					  <div>
-					    <strong class="block text-lg font-bold text-white">Get 5 leads for 25$ a month texted to your phone</strong>
-					  </div>
-					</article>
+					{/* Timeline */}
 
-					<div className="flex flex-col gap-4 rounded-lg bg-black p-6">
-						<button 
-							className="block bg-blue-500 rounded-lg text-white px-5 py-2 items-center font-bold"
-							onClick={()=> {
-								window.location.href = 'https://square.link/u/S6M7W4fd'
-							}}
-						>
-							Sign up 
-						</button>
+					<div className="flex flex-col gap-2 rounded-lg bg-white p-2">
+					  <ul role="list" class="-mb-8">
+					    <li className="bg-gray-100 mt-2 rounded-lg p-4">
+					      <div class="relative">
+					        <div class="relative flex items-start space-x-3">
+					          <div class="px-2 py-2">
+					              <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+					                <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
+					              </svg>
+					          </div>
+					          <div class="min-w-0 flex-1">
+					            <div>
+					              <h1 className="mt-0.5 text-lg text-black">{customerPhone}</h1>
+					            </div>
+					            <div>
+					              <p className="mt-0.5 text-sm text-black">{lastTimeCustomerReachedOut}</p>
+					            </div>
+					            <div className="py-6 px-4 bg-gray-200 rounded-lg mr-4 mb-4 mt-4">
+					            	<p className="text-sm font-bold text-black">{lastCustomerMessage}</p>
+					            </div>
+					            <button
+									className="rounded-lg bg-black px-4 py-2 hover:bg-gray-500 text-white"
+									onClick={()=>{
+										window.location.href = "sms:+12107128563"
+									}}
+								>
+									text
+					            </button>
+					          </div>
+					        </div>
+					      </div>
+					    </li>
+
+					  </ul>
 					</div>
+
 
 					{/* input field for open ai search
 					<div classNameName='flex flex-col items-center justify-center'>
@@ -262,7 +278,7 @@ export default function Dashboard(){
 				</div>	
 				:
 				<div>
-				<p className='text-white'>Loading...</p>
+				<p className='text-black'>Loading...</p>
 				</div>
 			}	
 		</div>

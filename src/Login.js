@@ -67,7 +67,7 @@ export default function Login(){
 	}
 	
 	return (
-	<section className="bg-gray-900 dark:bg-white">
+	<section className="bg-white">
 	  <div className="lg:grid min-h-screen lg:grid-cols-12 px-6 pt-6 lg:px-8 justify-center">
 	    <div
 	      className="relative flex h-full items-end lg:col-span-5 xl:col-span-6 hidden lg:block"
@@ -104,7 +104,7 @@ export default function Login(){
 	          <div className="col-span-6 sm:col-span-3">
 	            <label
 	              for="phone"
-	              className="block text-sm font-medium text-gray-700 dark:text-gray-700"
+	              className="block text-sm font-medium text-gray-700"
 	            >
 	              Phone number
 	            </label>
@@ -129,7 +129,7 @@ export default function Login(){
 				<div className="col-span-6 sm:flex sm:items-center sm:gap-4">
 					<p className="mt-4 text-sm text-gray-900 font-semibold sm:mt-0">
 						Already have an account?{" "}
-						<a href="/login" className="dark:text-gray-700 underline font-semibold text-gray-200">
+						<a href="/login" className="underline font-semibold text-gray-700">
 							Log in
 						</a>.
 					</p>
