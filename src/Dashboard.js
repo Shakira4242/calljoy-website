@@ -233,7 +233,7 @@ export default function Dashboard(){
 					            <button
 									className="rounded-lg bg-black px-4 py-2 hover:bg-gray-500 text-white"
 									onClick={()=>{
-										window.location.href = "sms:+12107128563"
+										window.location.href = "sms:+1" + customerPhone
 									}}
 								>
 									text
