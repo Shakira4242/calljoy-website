@@ -51,9 +51,6 @@ const HomePage = () => {
   return (
     <>
       <NavigationBar/>
-      <CompanyTestimonial/>
-      <Stats/>
-      <Footer/>
     </>
   );
 }

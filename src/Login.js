@@ -48,8 +48,6 @@ export default function Login(){
 
 		const phone = toE164(data.phone)
 		
-
-
 		supabase.auth.signInWithOtp({'phone': phone})
 		.then(({ data, error }) => {
 			if(error) {
@@ -73,7 +71,7 @@ export default function Login(){
 	      className="relative flex h-full items-end lg:col-span-5 xl:col-span-6 hidden lg:block"
 	    >
 	      <img
-	        src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/iPhone%2013%20Pro%20Max%20-%202(3).png"
+	        src="https://bpeqsefkefhjnfshvrck.supabase.co/storage/v1/object/public/calls/iPhone%2013%20Pro%20Max%20-%203(1).png"
 	        className="absolute inset-0 h-full w-full object-scale-down opacity-80"
 	      />
 	    </div>
@@ -102,20 +100,38 @@ export default function Login(){
 
 	        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 grid grid-cols-6 gap-6">
 	          <div className="col-span-6 sm:col-span-3">
-	            <label
-	              for="phone"
-	              className="block text-sm font-medium text-gray-700"
-	            >
-	              Phone number
-	            </label>
-
-	            <input
-	              type="tel"
-	              id="phone"
-	              name="phone"
-	              className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm border-gray-700 bg-gray-800 text-gray-200 font-bold"
-				  {...register("phone", { required: true })}
-	            />
+			  	<div className="mt-1 relative rounded-md shadow-sm">
+				  <div>
+					<label htmlFor="phone-number" className="block text-sm font-medium text-gray-700">
+					Phone Number
+					</label>
+					<div className="mt-1 relative rounded-md shadow-sm">
+					<div className="absolute inset-y-0 left-0 flex items-center">
+						<label htmlFor="country" className="sr-only">
+						Country
+						</label>
+						<select
+						id="country"
+						name="country"
+						autoComplete="country"
+						className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-3 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+						>
+						<option>US</option>
+						<option>CA</option>
+						<option>EU</option>
+						</select>
+					</div>
+					<input
+						type="text"
+						name="phone-number"
+						id="phone-number"
+						className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-16 sm:text-sm border-gray-300 rounded-md"
+						placeholder="+1 (555) 987-6543"
+						{...register("phone", { required: true })}
+					/>
+					</div>
+				</div>
+				</div>
 	          </div>
 
 	          	<div className="col-span-6 sm:flex sm:items-center sm:gap-4">
