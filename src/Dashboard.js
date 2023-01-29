@@ -13,6 +13,7 @@ import { DateTime } from "luxon";
 
 const people = [
 	{ channel: 'facebook', text: '3109874586'},
+	{ channel: 'nextdoor', text: '3239919410'},
 	// More people...
 ]
 
@@ -20,6 +21,8 @@ export default function Dashboard(){
 	const navigate = useNavigate();
 
 	const [loading, setLoading] = useState(true);
+
+	const [leads, setLeads] = useState([])
 
 	useEffect(() => {
 		setLoading(true);
@@ -33,7 +36,18 @@ export default function Dashboard(){
 			var phone = user.data.user.phone.substring(1);
 
 			supabase.from('Outreach').select('*').eq('business_phone', phone).then((data) => {
-				console.log(data.data[0])
+				console.log(data.data[0].first_lead_phone_number)
+				console.log(data.data[0].second_lead_phone_number)
+				setLeads([
+					{
+						channel: 'facebook',
+						text: data.data[0].first_lead_phone_number
+					},
+					{
+						channel: 'nextdoor',
+						text: data.data[0].second_lead_phone_number
+					}
+				])
 			});
 
 			setLoading(false);
@@ -81,7 +95,7 @@ export default function Dashboard(){
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-200 bg-white">
-								{people.map((person) => (
+								{leads.map((person) => (
 								<tr key={person.text}>
 									<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.channel}</td>
 									<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
